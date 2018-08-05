@@ -1,0 +1,16 @@
+{
+  "name": "amazon-product-info",
+  "version": "1.0.0",
+  "description": "An app that fetches and displays product information on Amazon based on an ASIN",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Colin Turner",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "puppeteer": "^1.6.2",
+    "request": "^2.87.0"
+  }
+}
