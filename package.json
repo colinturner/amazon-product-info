@@ -4,7 +4,7 @@
   "description": "An app that fetches and displays product information on Amazon based on an ASIN",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Colin Turner",
   "license": "ISC",
@@ -12,5 +12,9 @@
     "cheerio": "^1.0.0-rc.2",
     "puppeteer": "^1.6.2",
     "request": "^2.87.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
   }
 }

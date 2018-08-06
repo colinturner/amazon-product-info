@@ -24,6 +24,8 @@ const puppeteer = require('puppeteer');
       () => [document.querySelector('#SalesRank > td.value')].map(elem => elem.innerText).pop()
     );
 
+    console.log('categoryAndRankString', categoryAndRankString);
+
     extractCategoryAndRank(categoryAndRankString, product['rank']);
 
     console.log(product);
