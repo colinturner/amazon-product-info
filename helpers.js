@@ -1,3 +1,10 @@
+const scrapeString = async (selector, page) => {
+  return await page.evaluate(
+    (selector) => [document.querySelector(selector)].map(elem => elem.innerText).pop(),
+    selector
+  );
+}
+
 const extractCategoryAndRank = (str, destination) => {
   str
   .replace(new RegExp(String.fromCharCode(160),'g'), ' ')
@@ -8,4 +15,4 @@ const extractCategoryAndRank = (str, destination) => {
   .forEach(val => destination[val[1]] = Number(val[0]))
 }
 
-module.exports = { extractCategoryAndRank };
+module.exports = { scrapeString, extractCategoryAndRank };

@@ -1,5 +1,6 @@
 const expect = require('chai').expect
 const extractCategoryAndRank = require('../helpers').extractCategoryAndRank;
+const scrapeString = require('../helpers').scrapeString;
 
 describe('Test suite', () => {
   it('should test assertions', () => {
@@ -35,8 +36,8 @@ describe('Helper functions', () => {
     })
   });
 
-  xdescribe('scrapeDimensionsString', () => {
-    it('should web-scrape product dimensions as string', () => {
+  xdescribe('scrapeString', () => {
+    it('should web-scrape product data as string', () => {
 
     });
   });

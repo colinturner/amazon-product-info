@@ -1,6 +1,6 @@
-const test1 = require('./helpers').test1;
+const scrapeString = require('./helpers').scrapeString;
 const extractCategoryAndRank = require('./helpers').extractCategoryAndRank;
-const cheerio = require('cheerio');
+// const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
 
 
@@ -11,31 +11,25 @@ const puppeteer = require('puppeteer');
     page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36');
 
     await page.goto('https://www.amazon.com/dp/B002QYW8LW');
-    await page.waitForSelector('.zg_hrsr_rank');
+    // await page.waitForSelector('.zg_hrsr_rank');
     await page.waitForSelector('.size-weight');
+    await page.waitForSelector('#productTitle');
 
-    const ranks = await page.$$('.zg_hrsr_rank');
+    // const ranks = await page.$$('.zg_hrsr_rank');
 
-    const product = {
+    let product = {
       name: '',
       rank: {},
       dimensions: '',
     };
 
-    const nameString = await page.evaluate(
-      () => [document.querySelector('#productTitle')].map(elem => elem.innerText).pop()
-    );
+    // Scrape data as strings
+    const nameString = await scrapeString('#productTitle', page);
+    const categoryAndRankString = await scrapeString('#SalesRank > td.value', page);
+    const dimensionsString = await scrapeString('tbody > tr.size-weight:nth-child(2) > td.value', page);
 
-    const categoryAndRankString = await page.evaluate(
-      () => [document.querySelector('#SalesRank > td.value')].map(elem => elem.innerText).pop()
-    );
-
-    const dimensionsString = await page.evaluate(
-      () => [document.querySelector('tbody > tr.size-weight:nth-child(2) > td.value')].map(elem => elem.innerText).pop()
-    )
-
+    // Format strings into JSON
     extractCategoryAndRank(categoryAndRankString, product['rank']);
-    console.log('type', typeof dimensionsString);
     product['dimensions'] = dimensionsString;
     product['name'] = nameString;
 
