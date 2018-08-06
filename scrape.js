@@ -1,6 +1,9 @@
 const scrapeString = require('./helpers').scrapeString;
 const extractCategoryAndRank = require('./helpers').extractCategoryAndRank;
 const puppeteer = require('puppeteer');
+const NAME_SELECTOR = require('./constants').NAME_SELECTOR;
+const DIMENSIONS_SELECTOR = require('./constants').DIMENSIONS_SELECTOR;
+const CATEGORY_AND_RANK_SELECTOR = require('./constants').CATEGORY_AND_RANK_SELECTOR;
 
 
 (async function main () {
@@ -15,9 +18,9 @@ const puppeteer = require('puppeteer');
     await page.waitForSelector('#productTitle');
 
     // Scrape data as strings
-    const nameString = await scrapeString('#productTitle', page);
-    const categoryAndRankString = await scrapeString('#SalesRank > td.value', page);
-    const dimensionsString = await scrapeString('tbody > tr.size-weight:nth-child(2) > td.value', page);
+    const nameString = await scrapeString(NAME_SELECTOR, page);
+    const dimensionsString = await scrapeString(DIMENSIONS_SELECTOR, page);
+    const categoryAndRankString = await scrapeString(CATEGORY_AND_RANK_SELECTOR, page);
 
     // Format strings into JSON
     const product = {
