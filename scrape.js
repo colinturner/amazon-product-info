@@ -1,26 +1,38 @@
-const scrapeString = require('./helpers').scrapeString;
-const extractCategoryAndRank = require('./helpers').extractCategoryAndRank;
 const puppeteer = require('puppeteer');
-const NAME_SELECTOR = require('./constants').NAME_SELECTOR;
-const DIMENSIONS_SELECTOR = require('./constants').DIMENSIONS_SELECTOR;
-const CATEGORY_AND_RANK_SELECTOR = require('./constants').CATEGORY_AND_RANK_SELECTOR;
+const {
+  scrapeString,
+  extractCategoryAndRank
+} = require('./helpers');
+const {
+  NAME_ELEMENT,
+  NAME_SELECTOR,
+  DIMENSIONS_ELEMENT,
+  DIMENSIONS_SELECTOR,
+  CATEGORY_AND_RANK_ELEMENT,
+  RANK,
+  USER_AGENT,
+  AMAZON_URL,
+  ASIN,
+  ERROR_MESSAGE,
+} = require('./constants');
 
-
-(async function main () {
+(async function main() {
   try {
     // Navigate to Amazon page in headless browser
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      headless: true
+    });
     const page = await browser.newPage();
-    page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36');
+    page.setUserAgent(USER_AGENT);
 
-    await page.goto('https://www.amazon.com/dp/B002QYW8LW');
-    await page.waitForSelector('.size-weight');
-    await page.waitForSelector('#productTitle');
+    await page.goto(`${AMAZON_URL}${ASIN}`);
+    await page.waitForSelector(DIMENSIONS_SELECTOR);
+    await page.waitForSelector(NAME_SELECTOR);
 
     // Scrape data as strings
-    const nameString = await scrapeString(NAME_SELECTOR, page);
-    const dimensionsString = await scrapeString(DIMENSIONS_SELECTOR, page);
-    const categoryAndRankString = await scrapeString(CATEGORY_AND_RANK_SELECTOR, page);
+    const nameString = await scrapeString(NAME_ELEMENT, page);
+    const dimensionsString = await scrapeString(DIMENSIONS_ELEMENT, page);
+    const categoryAndRankString = await scrapeString(CATEGORY_AND_RANK_ELEMENT, page);
 
     // Format strings into JSON
     const product = {
@@ -28,11 +40,11 @@ const CATEGORY_AND_RANK_SELECTOR = require('./constants').CATEGORY_AND_RANK_SELE
       dimensions: dimensionsString,
       rank: {},
     };
-    extractCategoryAndRank(categoryAndRankString, product['rank']);
+    extractCategoryAndRank(categoryAndRankString, product[RANK]);
 
     console.log(product);
 
   } catch (e) {
-    console.log('our error', e);
+    console.log(ERROR_MESSAGE, e);
   }
 })();
