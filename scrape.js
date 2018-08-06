@@ -17,9 +17,14 @@ const puppeteer = require('puppeteer');
     const ranks = await page.$$('.zg_hrsr_rank');
 
     const product = {
+      name: '',
       rank: {},
       dimensions: '',
     };
+
+    const nameString = await page.evaluate(
+      () => [document.querySelector('#productTitle')].map(elem => elem.innerText).pop()
+    );
 
     const categoryAndRankString = await page.evaluate(
       () => [document.querySelector('#SalesRank > td.value')].map(elem => elem.innerText).pop()
@@ -32,6 +37,7 @@ const puppeteer = require('puppeteer');
     extractCategoryAndRank(categoryAndRankString, product['rank']);
     console.log('type', typeof dimensionsString);
     product['dimensions'] = dimensionsString;
+    product['name'] = nameString;
 
     console.log(product);
 
