@@ -33,5 +33,23 @@ describe('Helper functions', () => {
       extractCategoryAndRank(webScrapedString2, productJSON['rank']);
       expect(productJSON).to.deep.equal(desiredFormat2);
     })
+  });
+
+  xdescribe('scrapeDimensionsString', () => {
+    it('should web-scrape product dimensions as string', () => {
+
+    });
+  });
+
+  xdescribe('extractDimensions', () => {
+    it('should format web-scraped dimensions string into JSON', () => {
+      const webScrapedString = '4.3 x 0.4 x 7.9 inches';
+      const productJSON = {};
+      const desiredFormat = {
+        dimensions: '4.3 x 0.4 x 7.9 inches'
+      }
+      extractDimensions(webScrapedString, productJSON);
+      expect(productJSON).to.deep.equal(desiredFormat);
+    });
   })
 });
