@@ -19,11 +19,15 @@ describe('Helper functions', () => {
           'Baby > Baby Care > Pacifiers, Teethers & Teething Relief > Teethers': 2,
         }
       };
-      let productJSON = { rank: {} };
+      let productJSON = {
+        rank: {}
+      };
       extractCategoryAndRank(webScrapedString1, productJSON['rank']);
       expect(productJSON).to.deep.equal(desiredFormat1);
 
-      productJSON = { rank: {} };
+      productJSON = {
+        rank: {}
+      };
       const webScrapedString2 = '#411 in Baby (See top 100)\n#3 in Industrial & Scientific > Professional Medical Supplies > Diagnostics & Screening > Thermometers > Oral\n';
       const desiredFormat2 = {
         rank: {
