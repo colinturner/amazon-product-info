@@ -1,0 +1,1 @@
+Clone repo and run in terminal with `node scrape.js`
